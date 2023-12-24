@@ -1,0 +1,6 @@
+<% layout('./layouts/layout.eta') %>
+
+<div class="p-2 mt-1 mb-1">
+    <h1><%= it.result %></h1>
+    <a href="/quiz/<%= it.topic_id %>">Next question</a>
+</div>

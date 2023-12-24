@@ -1,0 +1,27 @@
+<% layout("./layouts/layout.eta") %>
+
+<div class="p-2 mt-1 mb-1">
+  <h1>Please register</h1>
+
+  <form method="POST" action="/auth/register">
+    <fieldset>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input class="form-control" type="email" name="email" value="<%= it.email %>" placeholder="Email" />
+        <label for="password">Password</label>
+        <input class="form-control" type="password" name="password" value="<%= it.password %>" placeholder="Password" />
+      </div>
+      <% if (it.validationErrors) { %>
+      <ul>
+      <% Object.keys(it.validationErrors).forEach((attribute) => { %>
+          <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
+              <li><%= err %></li>
+          <% }); %>
+      <% }); %>
+      </ul>
+      <% } %>
+      <input type="submit" value="Register" class="btn btn-primary" />
+      <a href="/auth/login">Already registered? Login here.</a>
+    </fieldset>
+  </form>
+</div>

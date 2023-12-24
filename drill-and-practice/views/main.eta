@@ -1,0 +1,24 @@
+<% layout('./layouts/layout.eta') %>
+
+<div class="p-2 mt-1 mb-1">
+    <h1>Drill and Practice!</h1>
+    <div class="p-2 w-50" style="background-color: #eee;">
+        <p>This web application is built for drilling and praticing questions of certain topics! Please login to access quizzes, and to create new questions!</p>
+    </div>
+</div>
+
+<div class="p-2 mt-1 mb-1">
+    <h2>Statistics</h2>
+    <div class="p-2 w-50" style="background-color: #eee;">
+        <p>
+            Number of topics: <%= it.topic_count %></br>
+            Number of questions: <%= it.question_count %></br>
+            Number of answers: <%= it.answer_count %></br>
+        </p>
+    </div>
+</div>
+
+<div class="p-2 mt-1 mb-1">
+    <a class="btn btn-primary" href="/auth/login" role="button">Login</a>
+    <a class="btn btn-primary" href="/auth/register" role="button">Registration</a>
+</div>
