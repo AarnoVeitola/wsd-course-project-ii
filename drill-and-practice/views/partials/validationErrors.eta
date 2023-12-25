@@ -1,9 +1,0 @@
-<% if (it.validationErrors) { %>
-        <ul>
-          <% Object.keys(it.validationErrors).forEach((attribute) => { %>
-            <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
-              <li><%= err %></li>
-            <% }); %>
-          <% }); %>
-        </ul>
-      <% } %>
