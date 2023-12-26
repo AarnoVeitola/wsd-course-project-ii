@@ -46,10 +46,7 @@ const processLogin = async ({ render, request, response, state }) => {
   );
 
   const user = userFromDatabase[0];
-  const passwordMatches = await bcrypt.compare(
-    loginData.password,
-    user.password,
-  );
+  const passwordMatches = loginData.password ? await bcrypt.compare(loginData.password, user.password) : false;
 
   if (!passwordMatches) {
     loginData.errors = [];
