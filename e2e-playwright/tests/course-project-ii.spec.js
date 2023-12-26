@@ -1,11 +1,20 @@
 const { test, expect } = require("@playwright/test");
 
 test("The main page has working links to '/topics' and '/quiz'", async ({ page }) => {
+    await page.goto("/auth/login");
+    await page.locator("input[type=email]").type("admin@admin.com");
+    await page.locator("input[type=password]").type("123456");
+    await page.locator("input[type=submit]").click();
+
     await page.goto("/");
-    await expect(page.locator("a >> text='Topics")).toHaveText("Topics");
-    await expect(page.locator("a >> text='Quiz'")).toHaveText("Quiz");
+    await expect(page.locator("a >> text='Topics'")).toHaveText("Topics");
     await page.locator("a >> text='Topics'").click();
     await expect(page).toHaveURL("/topics");
+
+    await page.goto("/");
+    await expect(page.locator("a >> text='Quiz'")).toHaveText("Quiz");
+    await page.locator("a >> text='Quiz'").click();
+    await expect(page).toHaveURL("/quiz");
 });
 
 test("The main page has a link to the login and registration pages", async ({ page }) => {
@@ -31,9 +40,29 @@ test("Registering and logging in works", async ({ page }) => {
     await expect(page).toHaveURL("/");
 });
 
-test("Making a request to '/api/questions/random' return a JSON document", async ({ page }) => {
-    const response = await page.goto("/api/questions/random");
-    expect(await response.json()).toBe("JSON");
+test("Path '/topics' requires authentication", async ({ page }) => {
+    await page.goto("/topics");
+    await expect(page).toHaveURL("/auth/login");
+
+    await page.goto("/auth/login");
+    await page.locator("input[type=email]").type("admin@admin.com");
+    await page.locator("input[type=password]").type("123456");
+    await page.locator("input[type=submit]").click();
+
+    await page.goto("/topics");
+    await expect(page).toHaveURL("/topics");
 });
 
-// TEST API
+test("Path '/quiz' requires authentication", async ({ page }) => {
+    await page.goto("/quiz");
+    await expect(page).toHaveURL("/auth/login");
+
+    await page.goto("/auth/login");
+    await page.locator("input[type=email]").type("admin@admin.com");
+    await page.locator("input[type=password]").type("123456");
+    await page.locator("input[type=submit]").click();
+
+    await page.goto("/quiz");
+    await expect(page).toHaveURL("/quiz");
+});
+
