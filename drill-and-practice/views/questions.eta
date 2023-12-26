@@ -29,7 +29,7 @@
         <textarea class="form-control" name="question_text" placeholder="Question"></textarea>
       </div>
       <% if (it.validationErrors) { %>
-        <ul>
+        <ul class="list-unstyled">
           <% Object.keys(it.validationErrors).forEach((attribute) => { %>
             <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
               <li><%= err %></li>

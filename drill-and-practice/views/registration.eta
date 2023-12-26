@@ -12,7 +12,7 @@
         <input class="form-control" type="password" name="password" value="<%= it.password %>" placeholder="Password" />
       </div>
       <% if (it.validationErrors) { %>
-      <ul>
+      <ul class="list-unstyled">
       <% Object.keys(it.validationErrors).forEach((attribute) => { %>
           <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
               <li><%= err %></li>

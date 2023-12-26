@@ -42,7 +42,7 @@
         <label class="form-check-label" for="is_correct">Correct answer?</label>
       </div>
       <% if (it.validationErrors) { %>
-        <ul>
+        <ul class="list-unstyled">
           <% Object.keys(it.validationErrors).forEach((attribute) => { %>
             <% Object.values(it.validationErrors[attribute]).forEach((err) => { %>
               <li><%= err %></li>
