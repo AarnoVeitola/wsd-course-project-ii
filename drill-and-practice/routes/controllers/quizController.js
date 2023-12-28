@@ -52,10 +52,13 @@ const showCorrect = ({ render, params }) => {
     });
 };
 
-const showIncorrect = ({ render, params }) => {
+const showIncorrect = async ({ render, params }) => {
+    const correct = await optionService.findCorrectOption(params.qId);
+
     render("quizResult.eta", {
         result: "Incorrect!",
         topic_id: params.tId,
+        option_text: correct[0].option_text,
     });
 };
 

@@ -2,5 +2,8 @@
 
 <div class="p-2 mt-1 mb-1">
     <h1><%= it.result %></h1>
+    <% if (it.option_text) { %>
+    <p>The correct option was <%= it.option_text %></p>
+    <% }; %>
     <a href="/quiz/<%= it.topic_id %>">Next question</a>
 </div>

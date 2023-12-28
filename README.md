@@ -24,6 +24,8 @@ The project is styled using Bootstrap.
 
 ## Testing
 
+### Running tests
+
 
 
 Write the documentation of your project here. Do not include your personal

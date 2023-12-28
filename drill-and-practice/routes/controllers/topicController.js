@@ -3,7 +3,6 @@ import * as questionService from "../../services/questionService.js";
 import * as optionService from "../../services/optionService.js";
 import * as answerService from "../../services/answerService.js";
 import { validasaur } from "../../deps.js";
-import { sql } from "../../database/database.js";
 
 const topicValidationRules = {
     name: [validasaur.required],
@@ -52,20 +51,17 @@ const showTopics = async ({ render, user }) => {
 };
 
 const deleteTopic = async ({ params, response, user }) => {
-    if (!user || !user.admin) {
-        response.redirect("/auth/login");
+    if (user && user.admin) {
+        const questions = await questionService.listQuestionsByTopic(params.id);
+
+        for (const question of questions) {
+            await answerService.deleteAnswersByQuestionId(question.id);
+            await optionService.deleteOptionsByQuestionId(question.id);
+            await questionService.deleteQuestion(question.id);
+        }
+
+        await topicService.deleteTopic(params.id);
     }
-
-    const questions = await questionService.listQuestionsByTopic(params.id);
-
-    for (const question of questions) {
-        await answerService.deleteAnswersByQuestionId(question.id);
-        await optionService.deleteOptionsByQuestionId(question.id);
-        await questionService.deleteQuestion(question.id);
-    }
-
-    await topicService.deleteTopic(params.id);
-
     response.redirect("/topics");
 };
 

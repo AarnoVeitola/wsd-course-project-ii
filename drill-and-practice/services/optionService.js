@@ -16,6 +16,10 @@ const findOption = async (id) => {
     return await sql`SELECT * FROM question_answer_options WHERE id = ${ id }`;
 };
 
+const findCorrectOption = async (question_id) => {
+    return await sql`SELECT * FROM question_answer_options WHERE question_id = ${ question_id } AND is_correct = true`;
+};
+
 const deleteOption = async (id) => {
     await sql`DELETE FROM question_answer_options WHERE id = ${ id }`;
 };
@@ -26,5 +30,6 @@ export {
     addOption, 
     deleteOptionsByQuestionId, 
     findOption, 
+    findCorrectOption,
     deleteOption
 };
