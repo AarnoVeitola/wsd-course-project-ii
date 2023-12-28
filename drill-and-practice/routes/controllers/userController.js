@@ -54,7 +54,7 @@ const processLogin = async ({ render, request, response, state }) => {
     render("login.eta", loginData);
   } else {
     await state.session.set("user", user);
-    response.redirect("/");
+    response.redirect("/topics");
   }
 };
 

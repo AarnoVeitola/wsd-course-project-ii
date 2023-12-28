@@ -9,10 +9,10 @@ const showQuizTopics = async ({ render }) => {
     });
 };
 
-const chooseRandomQuestion = async ({ params, response }) => {
+const chooseRandomQuestion = async ({ render, params, response }) => {
     const questions = await questionService.listQuestionsByTopic(params.tId);
     if (!questions || questions.length === 0) {
-        response.body = "No questions yet for this topic."
+        render("emptyQuiz.eta");
     } else {
         const question = questions[Math.floor(Math.random() * questions.length)];
         response.redirect(`/quiz/${ params.tId }/questions/${ question.id }`);
