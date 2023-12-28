@@ -37,7 +37,7 @@ test("Registering and logging in works", async ({ page }) => {
     await page.locator("input[type=email]").type("test@test.com");
     await page.locator("input[type=password]").type("123456");
     await page.locator("input[type=submit]").click();
-    await expect(page).toHaveURL("/");
+    await expect(page).toHaveURL("/topics");
 });
 
 test("Path '/topics' requires authentication", async ({ page }) => {
@@ -66,3 +66,36 @@ test("Path '/quiz' requires authentication", async ({ page }) => {
     await expect(page).toHaveURL("/quiz");
 });
 
+test("The JSON document received when making a request to '/api/questions/random' has the attributes 'answerOptions', 'questionId' and 'questionText'", async ({ page }) => {
+    await page.goto("/auth/login");
+    await page.locator("input[type=email]").type("admin@admin.com");
+    await page.locator("input[type=password]").type("123456");
+    await page.locator("input[type=submit]").click();
+
+    await page.goto("/topics/1");
+    await page.locator("textarea").type("Question 1");
+    await page.locator("input[type=submit]").click();
+    const response = await page.goto("/api/questions/random");
+    const text = await response.json();
+    expect(text.answerOptions).toBeDefined();
+    expect(text.questionId).toBeDefined();
+    expect(text.questionText).toBeDefined();
+});
+
+test("Topic delete button only shows if logged in as an admin", async ({ page }) => {
+    await page.goto("/auth/login");
+    await page.locator("input[type=email]").type("test@test.com");
+    await page.locator("input[type=password]").type("123456");
+    await page.locator("input[type=submit]").click();
+
+    await page.goto("/topics");
+    await expect(page.locator("ul[class='list-group']")).not.toContainText("Delete");
+
+    await page.goto("/auth/login");
+    await page.locator("input[type=email]").type("admin@admin.com");
+    await page.locator("input[type=password]").type("123456");
+    await page.locator("input[type=submit]").click();
+
+    await page.goto("/topics");
+    await expect(page.locator("ul[class='list-group']")).toContainText("Delete");
+});
