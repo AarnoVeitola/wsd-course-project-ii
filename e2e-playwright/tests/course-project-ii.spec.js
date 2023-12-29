@@ -99,3 +99,51 @@ test("Topic delete button only shows if logged in as an admin", async ({ page })
     await page.goto("/topics");
     await expect(page.locator("ul[class='list-group']")).toContainText("Delete");
 });
+
+test("Adding and deleting a topic works", async ({ page }) => {
+    await page.goto("/auth/login");
+    await page.locator("input[type=email]").type("admin@admin.com");
+    await page.locator("input[type=password]").type("123456");
+    await page.locator("input[type=submit]").click();
+
+    await page.goto("/topics");
+    await page.locator("input[type=text]").type("Topic 1");
+    await page.getByRole('button', { name: 'Add' }).click();
+    await expect(page.locator("ul[class='list-group']")).toContainText("Topic 1");
+    await page.locator("li").filter({ hasText: 'Topic 1 Delete' }).getByRole('button').click()
+    await expect(page.locator("ul[class='list-group']")).not.toContainText("Topic 1");
+
+});
+
+test("Adding a question works", async ({ page }) => {
+    await page.goto("/auth/login");
+    await page.locator("input[type=email]").type("admin@admin.com");
+    await page.locator("input[type=password]").type("123456");
+    await page.locator("input[type=submit]").click();
+
+    await page.goto("/topics");
+    await page.locator("input[type=text]").type("Topic 2");
+    await page.getByRole('button', { name: 'Add' }).click();
+    await page.goto("/topics");
+    await page.locator("a >> text='Topic 2'").click();
+    await page.locator("textarea").type("Question 1");
+    await page.getByRole('button', { name: 'Add' }).click();
+
+    await expect(page.locator("ul[class='list-group']")).toContainText("Question 1");
+});
+
+test("Adding an answer option works", async ({ page }) => {
+    await page.goto("/auth/login");
+    await page.locator("input[type=email]").type("admin@admin.com");
+    await page.locator("input[type=password]").type("123456");
+    await page.locator("input[type=submit]").click();
+
+    await page.goto("/topics");
+    await page.locator("a >> text='Topic 2'").click();
+    await page.locator("a >> text='Question 1'").click();
+
+    await page.locator("textarea").type("Option 1");
+    await page.getByRole('button', { name: 'Add' }).click();
+
+    await expect(page.locator("ul[class='list-group']")).toContainText("Option 1");
+});
