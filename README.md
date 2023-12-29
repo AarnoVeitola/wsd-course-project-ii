@@ -6,31 +6,24 @@ This project contains a web application used for repeated practice of learned co
 
 ### Services and controllers
 
-The application contains five different services for querying the database. The services are used by six different controllers. Some controllers (e.g. **topicController.js**) use several different services. 
+The application contains five different services for querying the database. The services are used by six controllers: **mainController.js**, **userController.js**, **topicController.js**, **questionController.js**, **optionController.js**, and **quizController.js**. The controllers have functionality for the main page, authentication via login and registration, topics, questions, options, and quizzes, respectively. Some controllers (e.g. **topicController.js**) use several different services. 
+
+### Middleware
+
+In addition to the standard middleware, the project uses **authMiddleware.js** to make sure that the user is authenticated and authorized to access certain pages.
 
 ### Views
 
-In addition to nine views, the project also includes one general layout and a partial used by the layout. The partial includes a navbar that is displayed on each view.
+In addition to ten views, the project also includes one general layout and a partial used by the layout. The partial includes a *navbar* that is displayed on each view. The project is styled using Bootstrap. 
 
 ### APIs
 
-The project also includes an API for fetching a random question and checking if an answer is correct.
+The project also includes an API for fetching a random question and checking if an answer is correct. A random question can be fetched as a JSON document by making a GET request to */api/questions/random*. The correctness of an answer can be checked by making a POST request to */api/questions/answer* including a JSON document with the **questionId** and **optionId**.
 
-## Access control
+## Running the application
 
-## Style
-
-The project is styled using Bootstrap.
+The application can be run locally with Docker simply by running the command *docker compose up*.
 
 ## Testing
 
-### Running tests
-
-
-
-Write the documentation of your project here. Do not include your personal
-details (e.g. name or student number).
-
-Remember to include the address of the online location where your project is
-running as it is a key part of the submission.
-
+The project includes ten end-to-end tests for testing the functionality of the application. The tests can be run by using the command *docker compose run --entrypoint=npx e2e-playwright playwright test && docker compose rm -sf*.
