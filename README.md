@@ -1,5 +1,7 @@
 # Project 2: Drill and Practice (an individual project for the Aalto University Web Software Development course)
 
+**There seems to be some issues with deploying the demo application on the free subscription of Render. This is under investigation, but there may be problems with accessing the page. Sorry for the inconvenience!**
+
 This project contains a web application used for repeated practice of learned content. The application uses a three-tier architecture (client, server, database) and a layered architecture with four layers (views, controllers, services, database). The project is deployed online at https://aarno-unique-wsd-course-project-ii.onrender.com (deployed on the free version of Render, so the site may take some time to load). Admin features in the deployed application can be accessed with the same admin credentials as specified in the assignment description.
 
 ## Structure
