@@ -1,3 +1,3 @@
 import { app } from "./app.js";
 
-app.listen({ port: 7777 });
+app.listen({ port: process.env.PORT || 7777 });
