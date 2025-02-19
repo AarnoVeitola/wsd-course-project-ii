@@ -1,6 +1,11 @@
 import { app } from "./app.js";
 
-const port = Number(Deno.env.get("PORT")) || 7777; // Use Render's assigned port, fallback to 7777 locally
+const port = Number(Deno.env.get("PORT")) || 7777;
 console.log(`Server running on http://0.0.0.0:${port}`);
 
-app.listen({ port, hostname: "0.0.0.0" }); // Ensure Render detects the open port
+try {
+  await app.listen({ port, hostname: "0.0.0.0" });
+} catch (error) {
+  console.error("Error starting server:", error);
+  Deno.exit(1);
+}
